@@ -47,7 +47,7 @@ public class ProtocolSettings implements Serializable {
     private boolean convertToAscii;
     private int bitsPerPixel;
     public transient LinkedHashSet encodings;
-    private final transient List listeners;
+    private final transient List<IChangeSettingsListener> listeners;
     public transient CapabilityContainer tunnelingCapabilities;
     public transient CapabilityContainer authCapabilities;
     public transient CapabilityContainer serverMessagesCapabilities;
@@ -91,7 +91,7 @@ public class ProtocolSettings implements Serializable {
         this.allowClipboardTransfer = true;
         this.bitsPerPixel = 0;
         this.refine();
-        this.listeners = new LinkedList();
+        this.listeners = new LinkedList<>();
         this.tunnelingCapabilities = new CapabilityContainer();
         this.authCapabilities = new CapabilityContainer();
         this.serverMessagesCapabilities = new CapabilityContainer();
@@ -198,7 +198,7 @@ public class ProtocolSettings implements Serializable {
     }
 
     public void refine() {
-        LinkedHashSet encodings = new LinkedHashSet();
+        LinkedHashSet<EncodingType> encodings = new LinkedHashSet<>();
         if (EncodingType.RAW_ENCODING != this.preferredEncoding) {
             encodings.add(this.preferredEncoding);
             encodings.addAll(EncodingType.ordinaryEncodings);
@@ -264,13 +264,10 @@ public class ProtocolSettings implements Serializable {
     public void fireListeners() {
         SettingsChangedEvent event = new SettingsChangedEvent(new ProtocolSettings(this));
         this.changedSettingsMask = 0;
-        Iterator i$ = this.listeners.iterator();
-
-        while (i$.hasNext()) {
-            IChangeSettingsListener listener = (IChangeSettingsListener) i$.next();
+        Iterator i = this.listeners.iterator();
+        for (IChangeSettingsListener listener : this.listeners) {
             listener.settingsChanged(event);
         }
-
     }
 
     public static boolean isRfbSettingsChangedFired(SettingsChangedEvent event) {

@@ -49,8 +49,7 @@ public class ConnectionManager {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(host, port), 10000);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Messages.print_warn("could not connect to " + host + ":" + port + " (" + e.getMessage() + ")");
             return null;
         }

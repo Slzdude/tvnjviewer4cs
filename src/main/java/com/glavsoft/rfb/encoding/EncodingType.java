@@ -36,9 +36,9 @@ public enum EncodingType {
 
     private int id;
     private final String name;
-    public static LinkedHashSet ordinaryEncodings = new LinkedHashSet();
-    public static LinkedHashSet pseudoEncodings;
-    public static LinkedHashSet compressionEncodings;
+    public static LinkedHashSet<EncodingType> ordinaryEncodings = new LinkedHashSet<>();
+    public static LinkedHashSet<EncodingType> pseudoEncodings;
+    public static LinkedHashSet<EncodingType> compressionEncodings;
 
     private EncodingType(int id, String name) {
         this.id = id;
@@ -54,16 +54,12 @@ public enum EncodingType {
     }
 
     public static EncodingType byId(int id) {
-        EncodingType[] arr$ = values();
-        int len$ = arr$.length;
-
-        for (int i$ = 0; i$ < len$; ++i$) {
-            EncodingType type = arr$[i$];
+        EncodingType[] arr = values();
+        for (EncodingType type : arr) {
             if (type.getId() == id) {
                 return type;
             }
         }
-
         throw new IllegalArgumentException("Unsupported encoding id: " + id);
     }
 
@@ -74,11 +70,11 @@ public enum EncodingType {
         ordinaryEncodings.add(ZLIB);
         ordinaryEncodings.add(RRE);
         ordinaryEncodings.add(COPY_RECT);
-        pseudoEncodings = new LinkedHashSet();
+        pseudoEncodings = new LinkedHashSet<>();
         pseudoEncodings.add(RICH_CURSOR);
         pseudoEncodings.add(CURSOR_POS);
         pseudoEncodings.add(DESKTOP_SIZE);
-        compressionEncodings = new LinkedHashSet();
+        compressionEncodings = new LinkedHashSet<>();
         compressionEncodings.add(COMPRESS_LEVEL_0);
         compressionEncodings.add(JPEG_QUALITY_LEVEL_0);
     }

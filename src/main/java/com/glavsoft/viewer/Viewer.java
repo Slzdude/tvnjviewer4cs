@@ -101,8 +101,9 @@ public class Viewer extends JPanel implements Runnable, IRfbSessionListener, Win
         Parser parser = new Parser();
         ParametersHandler.completeParserOptions(parser);
         parser.parse(args);
-        if (parser.isSet("help")) {
+        if (parser.isSet("help") || !parser.isSet("host")) {
             printUsage(parser.optionsUsage());
+            System.exit(0);
         }
 
         Viewer viewer = new Viewer(parser);

@@ -9,6 +9,7 @@ import com.glavsoft.rfb.protocol.ProtocolContext;
 import com.glavsoft.utils.Keymap;
 import com.glavsoft.viewer.swing.KeyboardConvertor;
 import com.glavsoft.viewer.swing.ModifierButtonEventListener;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
